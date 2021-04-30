@@ -18,8 +18,8 @@ def print_compute_handler(unused_addr, args, volume):
   except ValueError: pass
 
 def handle_osckeys(address: str, *args: List[Any]) -> None:
-  ""print("handle_osckey: {address}")
-  if not address[:len("/osckeys/")] == "/osckeys/":
+  #print("handle_osckey: {address}")
+  if not address[:len("/unity/key/")] == "/unity/key/":
       print("Uknown osc address: {address}")
       return
   for key in args:
@@ -39,7 +39,7 @@ if __name__ == "__main__":
   dispatcher.map("/filter", print)
   dispatcher.map("/volume", print_volume_handler, "Volume")
   dispatcher.map("/logvolume", print_compute_handler, "Log volume", math.log)
-  dispatcher.map("/osckeys/*", handle_osckeys)
+  dispatcher.map("/unity/key/*", handle_osckeys)
 
   server = osc_server.ThreadingOSCUDPServer(
       (args.ip, args.port), dispatcher)
