@@ -21,5 +21,5 @@ if __name__ == "__main__":
   client = udp_client.SimpleUDPClient(args.ip, args.port)
 
   for x in "test osc keys\n":
-    client.send_message("/osckeys/", x)
+    client.send_message("/unity/key/", x)
     time.sleep(0.03)
