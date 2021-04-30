@@ -18,7 +18,7 @@ def print_compute_handler(unused_addr, args, volume):
   except ValueError: pass
 
 def handle_osckeys(address: str, *args: List[Any]) -> None:
-  print("handle_osckey: {address}")
+  ""print("handle_osckey: {address}")
   if not address[:len("/osckeys/")] == "/osckeys/":
       print("Uknown osc address: {address}")
       return
