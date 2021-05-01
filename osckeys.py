@@ -20,12 +20,35 @@ def print_compute_handler(unused_addr, args, volume):
 
 def handle_osckeys(address: str, *args: List[Any]) -> None:
   print("handle_osckey: address {0}".format(address))
+   
+  keys = address[-(len(address) - len(key_address)):]
   
-  keys = address[-(len(address) - len(key_address)):] 
-  for key in keys:
-    print("Key: {0}".format(key))  
-    keyboard.press(key)
-    keyboard.release(key)
+  if keys == "space":
+      keyboard.press(Key.space)
+      keyboard.release(Key.space)
+  elif keys == "right":
+      keyboard.press(Key.right)
+      keyboard.release(Key.right)
+  elif keys == "left":
+      keyboard.press(Key.left)
+      keyboard.release(Key.left)
+  elif keys == "up":
+      keyboard.press(Key.up)
+      keyboard.release(Key.up)
+  elif keys == "down":
+      keyboard.press(Key.down)
+      keyboard.release(Key.down) 
+  elif keys == "enter":
+      keyboard.press(Key.enter)
+      keyboard.release(Key.enter)
+  elif keys == "esc":
+      keyboard.press(Key.esc)
+      keyboard.release(Key.esc)
+  else:
+      for key in keys:
+        print("Key: {0}".format(key))  
+        keyboard.press(key)
+        keyboard.release(key)
   
   for key in args:
     print("Key: {0}".format(key))
