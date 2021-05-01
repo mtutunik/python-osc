@@ -5,7 +5,7 @@ from pythonosc import dispatcher
 from pythonosc import osc_server
 from typing import List
 from typing import Any
-from pynput.keyboard import Key, Controller
+from pynput.keyboard import Key, Controller, KeyCode
 
 keyboard = Controller()
 key_address = "/unity/key/"
