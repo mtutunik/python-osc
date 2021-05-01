@@ -18,11 +18,48 @@ def print_compute_handler(unused_addr, args, volume):
     print("[{0}] ~ {1}".format(args[0], args[1](volume)))
   except ValueError: pass
 
+
+def getModifier(keys: str): 
+  mod_pos = keys.find("_")
+  modifier = None
+  if mod_pos <= 0 :
+      return None, keys
+   
+  mod_str = keys[0:mod_pos]
+  if mod_str == "ctrl":
+    modifier = Key.ctrl
+  elif mod_str == "ctrl_":
+    modifier = Key.ctrl_l
+  elif mod_str == "ctrl_r":
+    modifier = Ker.ctrl_r
+  elif mod_str == "alt":
+    modifier = Key.alt
+  elif mod_str == "alt_l":
+    modifier = Key.alt_l
+  elif mod_str == "alt_r":
+    modifier = Key.alt_r
+  elif mod_str == "shift":
+    modifier = Key.shift
+  elif mod_str == "shift_l":
+    modifier = Key.shift_l
+  elif mod_str == "shift_r":
+    modifier = Key.shift_r
+  elif mod_str == "cmd":
+    modifier = Key.cmd
+  elif len(mod_str) == 1:
+    modifier = KeyCode.from_char(mod_str)
+  else:
+    modifier = None  
+
+  return modifier, keys[mod_pos + 1:] 
+       
+
+
 def handle_osckeys(address: str, *args: List[Any]) -> None:
   print("handle_osckey: address {0}".format(address))
    
   keys = address[-(len(address) - len(key_address)):]
-  
+
   if keys == "space":
       keyboard.press(Key.space)
       keyboard.release(Key.space)
@@ -45,15 +82,20 @@ def handle_osckeys(address: str, *args: List[Any]) -> None:
       keyboard.press(Key.esc)
       keyboard.release(Key.esc)
   else:
+      modifier, keys = getModifier(keys)
+          
+      if modifier != None:
+        keyboard.press(modifier)
+
       for key in keys:
-        print("Key: {0}".format(key))  
+        print("modifier key: {0} Key: {1}".format(modifier, key))  
         keyboard.press(key)
         keyboard.release(key)
-  
-  for key in args:
-    print("Key: {0}".format(key))
-    keyboard.press(key)
-    keyboard.release(key)
+      
+      if modifier != None:
+        keyboard.release(modifier)
+
+
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
